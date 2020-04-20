@@ -7,9 +7,9 @@
 
 ### contant
 
-- GitHub
+- **GitHub**
   The document is the content of the GitHub
 
-- Tensorflow
+- **Tensorflow**
   Some problems and solutions when I install tensorflow framework。
 
