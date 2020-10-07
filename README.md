@@ -47,3 +47,87 @@
    5 安装成功  
  - cmd输入python，然后import tensorflow检验
   
+
+- **JDK（LINUX）**
+  **准备**
+- 如果包在本地，要上传到服务器上，可以通过ftp
+- 解压压缩包，tar xzvf /srv/ftp/jdk -C /user/local/
+- 解压缩之后得到JDK的保存目录，讲其更名：mv /user/local/jdk.1.9/ /user/local/jdk
+- 在JDK的bin目录里面有所有的java可执行的命令，但需要配置到环境属性中
+- 环境属性配置：JDK环境支持，将jdk的路径配置进去：
+  ·打开配置文件 vim /etc/profile
+  ·追加两个配置项：
+  1、定义java_home环境的属性：export JAVA_HOME=/usr/local/jdk
+  2、将java的执行文件配置到可执行的路径中命令,：export PATH=$PATH:$JAVA_HOME/bin:（：配置分割符）
+- 使配置立即生效：source /etc/profile
+- 如果可以执行java的命令，则代表配置成功：直接输入“java”  
+*注意*
+- env查看用户的配置环境
+- ifconfig可以查看Ubuntu的ip地址
+- :wq与:q!的区别
+
+
+  - **Tomcat（LINUX）**
+  **准备**
+- Tomcat是web开发的一个重要容器，首先要安装JDK，然后在其环境下配置Tomcat（需要JAVA_Home）
+- Tomcat软件包下载到指定目录下“/tomcat”:wget https://downloads.apache.org/tomcat/tomcat-9/v9.0.38/bin/apache-tomcat-9.0.38.tar.gz（进入目录命令：cd /home/zw/tomcat）
+- 解压缩处理：tar xzvf 文件名称.tar.gz -C /其他目录路径
+- 解压缩文件更名： mv /文件夹 /文件夹
+- 环境属性配置：JDK环境支持，将jdk的路径配置进去
+  ·打开配置文件：vim /tomcat/bin/setclasspath.sh
+  ·在setclasspath.sh文件的头部追加如下的环境内容定义：export JAVA_HOME=/uer/local/jdk、JRE_HOME==/uer/local/jdk/jre
+- 默认的tomcat是工作在8080端口上的，现在可以修改为80端口
+  ·打开配置文件：tomcat/conf/server.xml
+  ·修改连接端口
+- 配置完成后进行tomcat的
+  ·启动：/tomcat/bin/catalina.sh start 
+  ·停止：/tomcat/bin/catalina.sh start
+- 查看所有端口：netstat -nptl
+-tomcat本身是基于JDK运行的，所以如果想在系统中查看所有与java相关的进程的时候，可以输入“jps”查看（如果有booststrap则证明启动了），进入tomcat下面的logs，more 文件名称
+-ifconfig查看ip地址，然后通过浏览器打开。
+*注意*
+- 首先要配置好JDK 命令：Java -version
+- ununtu切换到home下，给自己用户授权，sudo chmod -R 777 zw，然后切换到自己的用户 su - zw
+
+
+- **HTTPS（LINUX）**
+  **准备**
+- 1、为服务器生成证书（非信任的证书）：使用keytool为tomcat生成证书，这里面有个注意事项，在输入用户名的时候有两种方式（localhost/IP地址--浏览器输入的地址和证书的地址是否一致），其他的选项无所谓
+keytool -genkey -v -alias tomcat -keyalg RSA -keystore /home/zw/tomcat/tomcat.keystore -validity 36500
+- Tomcat软件包下载到指定目录下“/tomcat”:wget https://downloads.apache.org/tomcat/tomcat-9/v9.0.38/bin/apache-tomcat-9.0.38.tar.gz（进入目录命令：cd /home/zw/tomcat）
+- 2、为客户端生成证书（用户名输入localhost）
+keytool -genkey -v -alias mykey -keyalg RSA -storetype PKCS12 -keystore /home/zw/tomcat/mykey.p12
+- 3、让服务器信任客户端证书
+keytool -export -alias mykey -keystore /home/zw/tomcat/mykey.p12 -storetype PKCS12 -storepass 123456 -rfc -file /home/zw/tomcat/mykey.cer
+- 4、是将该文件导入到服务器的证书库，添加为一个信任证书使用命令如下：
+keytool -import -v -file /home/zw/tomcat/mykey.cer -keystore /home/zw/tomcat/tomcat.keystore
+- 5、让客户端信任服务器证书
+keytool -keystore /home/zw/tomcat/tomcat.keystore -export -alias tomcat -file /home/zw/tomcat/tomcat.cer
+- 6、配置tomcat文件：tomcat/conf/server.xml
+
+<Connector port="8443" protocol="org.apache.coyote.http11.Http11NioProtocol"
+
+ SSLEnabled="true" maxThreads="150" scheme="https"
+
+ secure="ture" clientAuth="ture" sslProtocol="TLS"
+
+ keystoreFile="/home/zw/tomcat/tomcat.keystore" keystorePass="123456"
+
+ truststoreFile="/home/zw/tomcat/tomcat.keystore" truststorePass="123456"     />
+
+其他说明：
+keystoreFile：服务器证书文件路径
+keystorePass：服务器证书密码
+truststoreFile：用来验证客户端证书的根证书，这就是服务器证书
+truststorePass：证书服务器密码
+- 7、测试：
+  ·启动tomcat：位置到tomcat/bin目录下./startup.sh
+  ·停止tomcat：./shutdown.sh
+  ·查看：tail -f ../logs/catalina.out(查看tomcat是否启动)
+  ·访问：https://localhost:8443（localhost:8080看一下是否可以进入tomcat的管理页面）
+  ·检查证书用户名是不是设置的是localhost
+  ·在浏览器中--设置--安全--证书管理--添加证书（mykey.p12）添加证书
+*注意*
+- 首先输入java看一下环境是否正确
+- ununtu切换到home下，给自己用户授权，sudo chmod -R 777 zw，然后切换到自己的用户 su - zw
+
