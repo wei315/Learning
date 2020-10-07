@@ -48,7 +48,7 @@
  - cmd输入python，然后import tensorflow检验
   
 
-- **JDK（LINUX）**
+**JDK（LINUX）**
   **准备**
 - 如果包在本地，要上传到服务器上，可以通过ftp
 - 解压压缩包，tar xzvf /srv/ftp/jdk -C /user/local/
@@ -67,7 +67,7 @@
 - :wq与:q!的区别
 
 
-  - **Tomcat（LINUX）**
+**Tomcat（LINUX）**
   **准备**
 - Tomcat是web开发的一个重要容器，首先要安装JDK，然后在其环境下配置Tomcat（需要JAVA_Home）
 - Tomcat软件包下载到指定目录下“/tomcat”:wget https://downloads.apache.org/tomcat/tomcat-9/v9.0.38/bin/apache-tomcat-9.0.38.tar.gz（进入目录命令：cd /home/zw/tomcat）
@@ -90,7 +90,7 @@
 - ununtu切换到home下，给自己用户授权，sudo chmod -R 777 zw，然后切换到自己的用户 su - zw
 
 
-- **HTTPS（LINUX）**
+**HTTPS（LINUX）**
   **准备**
 - 1、为服务器生成证书（非信任的证书）：使用keytool为tomcat生成证书，这里面有个注意事项，在输入用户名的时候有两种方式（localhost/IP地址--浏览器输入的地址和证书的地址是否一致），其他的选项无所谓
 keytool -genkey -v -alias tomcat -keyalg RSA -keystore /home/zw/tomcat/tomcat.keystore -validity 36500
