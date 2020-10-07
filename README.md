@@ -129,5 +129,6 @@ truststorePass：证书服务器密码
   ·在浏览器中--设置--安全--证书管理--添加证书（mykey.p12）添加证书
 *注意*
 - 首先输入java看一下环境是否正确
-- ununtu切换到home下，给自己用户授权，sudo chmod -R 777 zw，然后切换到自己的用户 su - zw
+-https://www.youtube.com/watch?v=fXeYkiH1QIE&ab_channel=%E6%B2%90%E8%A8%80%E4%BC%98%E6%8B%93
+-https://www.youtube.com/watch?v=G4aQBk836XU&list=PLwDQt7s1o9J7ilDjNdgiWR-w323ggE6Vc&index=3&t=8s&ab_channel=%E5%8D%83%E9%94%8B%E6%95%99%E8%82%B2
 
