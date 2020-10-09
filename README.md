@@ -80,7 +80,7 @@
   ·打开配置文件：tomcat/conf/server.xml
   ·修改连接端口
 - 配置完成后进行tomcat的
-  ·启动：/tomcat/bin/catalina.sh start 
+  ·启动：/tomcat/bin/catalina.sh start   或者  sh catalina.sh run 或者 nohup ./start.sh 或者 chmod 777 startup.sh
   ·停止：/tomcat/bin/catalina.sh start
 - 查看所有端口：netstat -nptl
 -tomcat本身是基于JDK运行的，所以如果想在系统中查看所有与java相关的进程的时候，可以输入“jps”查看（如果有booststrap则证明启动了），进入tomcat下面的logs，more 文件名称
@@ -90,7 +90,7 @@
 - ununtu切换到home下，给自己用户授权，sudo chmod -R 777 zw，然后切换到自己的用户 su - zw
 
 
-**HTTPS（LINUX）**
+**HTTPS（LINUX）需要证书**
   **准备**
 - 1、为服务器生成证书（非信任的证书）：使用keytool为tomcat生成证书，这里面有个注意事项，在输入用户名的时候有两种方式（localhost/IP地址--浏览器输入的地址和证书的地址是否一致），其他的选项无所谓
 keytool -genkey -v -alias tomcat -keyalg RSA -keystore /home/zw/tomcat/tomcat.keystore -validity 36500
@@ -127,8 +127,58 @@ truststorePass：证书服务器密码
   ·访问：https://localhost:8443（localhost:8080看一下是否可以进入tomcat的管理页面）
   ·检查证书用户名是不是设置的是localhost
   ·在浏览器中--设置--安全--证书管理--添加证书（mykey.p12）添加证书
+  
+  
+  **HTTPS（LINUX）不需要证书**
+  **准备**
+- 1、为服务器生成证书（非信任的证书）：使用keytool为tomcat生成证书，这里面有个注意事项，在输入用户名的时候有两种方式（localhost/IP地址--浏览器输入的地址和证书的地址是否一致），其他的选项无所谓
+keytool -genkey -v -alias tomcat -keyalg RSA -keystore /home/zw/tomcat/tomcat.keystore -validity 36500
+
+- 2、将证书导入JDK的证书信任库（用户名输入localhost）
+  ·导出证书
+执行命令“keytool -export -trustcacerts -alias tomcat -file /home/zw/tomcat/tomcat.cer -keystore /home/zw/tomcat/tomcat.keystore -storepass 123456”将证书导出到tomcat文件夹。
+  ·将证书导入到JDK证书信任库
+执行命令“keytool -import -trustcacerts -alias tomcat -file /home/zw/tomcat/tomcat.cer -keystore cacerts -storepass 123456”。系统询问是否信任此证书，回答“y”  
+keytool -import -trustcacerts -alias tomcat -keystore cacerts -storepass 123456 -file /home/zw/tomcat/tomcat.cer
+各个选项含义：
+keytool：密钥和证书管理工具；
+-import：导入证书选项，也可以使用-importcert代替；
+-trustcacerts：信任来自cacerts 的证书
+-alias ：要处理的条目的别名
+-file ：输入文件名，即证书的位置
+-storepass ：密钥库口令
+-keystore ：密钥库名称
+
+- 3、让服务器信任客户端证书
+keytool -export -alias mykey -keystore /home/zw/tomcat/mykey.p12 -storetype PKCS12 -storepass 123456 -rfc -file /home/zw/tomcat/mykey.cer
+- 4、是将该文件导入到服务器的证书库，添加为一个信任证书使用命令如下：
+keytool -import -v -file /home/zw/tomcat/mykey.cer -keystore /home/zw/tomcat/tomcat.keystore
+- 5、让客户端信任服务器证书
+keytool -keystore /home/zw/tomcat/tomcat.keystore -export -alias tomcat -file /home/zw/tomcat/tomcat.cer
+- 6、配置tomcat文件：tomcat/conf/server.xml
+
+<Connector port="8443" protocol="org.apache.coyote.http11.Http11NioProtocol"
+
+ SSLEnabled="true" maxThreads="150" scheme="https"
+
+ secure="ture" clientAuth="ture" sslProtocol="TLS"
+
+ keystoreFile="/home/zw/tomcat/tomcat.keystore" keystorePass="123456"
+
+ truststoreFile="/home/zw/tomcat/tomcat.keystore" truststorePass="123456"     />
+
+- 7、测试：
+  ·启动tomcat：位置到tomcat/bin目录下./startup.sh
+  ·停止tomcat：./shutdown.sh
+  ·查看：tail -f ../logs/catalina.out(查看tomcat是否启动)
+  ·访问：https://localhost:8443（localhost:8080看一下是否可以进入tomcat的管理页面）
+  ·检查证书用户名是不是设置的是localhost
+  ·在浏览器中--设置--安全--证书管理--添加证书（mykey.p12）添加证书
+  
+  
 *注意*
 - 首先输入java看一下环境是否正确
 - https://www.youtube.com/watch?v=fXeYkiH1QIE&ab_channel=%E6%B2%90%E8%A8%80%E4%BC%98%E6%8B%93
 - https://www.youtube.com/watch?v=G4aQBk836XU&list=PLwDQt7s1o9J7ilDjNdgiWR-w323ggE6Vc&index=3&t=8s&ab_channel=%E5%8D%83%E9%94%8B%E6%95%99%E8%82%B2
 - https://tomcat.apache.org/download-90.cgi
+- https://blog.csdn.net/u013991521/article/details/78292136 查找jdk的路径
