@@ -83,6 +83,7 @@
   ·启动：/tomcat/bin/catalina.sh start   或者  sh catalina.sh run 或者 nohup ./start.sh 或者 chmod 777 startup.sh
   ·停止：/tomcat/bin/catalina.sh start
 - 查看所有端口：netstat -nptl
+
 -tomcat本身是基于JDK运行的，所以如果想在系统中查看所有与java相关的进程的时候，可以输入“jps”查看（如果有booststrap则证明启动了），进入tomcat下面的logs，more 文件名称
 -ifconfig查看ip地址，然后通过浏览器打开。
 *注意*
@@ -136,9 +137,9 @@ keytool -genkey -v -alias tomcat -keyalg RSA -keystore /home/zw/tomcat/tomcat.ke
 
 - 2、将证书导入JDK的证书信任库（用户名输入localhost）
   ·导出证书
-执行命令“keytool -export -trustcacerts -alias tomcat -file /home/zw/tomcat/tomcat.cer -keystore /home/zw/tomcat/tomcat.keystore -storepass changeit”将证书导出到tomcat文件夹。
+执行命令“keytool -export -trustcacerts -alias tomcat -file /home/zw/tomcat/tomcat.cer -keystore /home/zw/tomcat/tomcat.keystore -storepass 123456”将证书导出到tomcat文件夹。
   ·将证书导入到JDK证书信任库
-执行命令“keytool -import -trustcacerts -alias tomcat -file /home/zw/tomcat/tomcat.cer -keystore cacerts -storepass 123456”。系统询问是否信任此证书，回答“y”  
+执行命令“keytool -import -trustcacerts -alias tomcat -file /home/zw/tomcat/tomcat.cer -keystore cacerts -storepass changeit”。系统询问是否信任此证书，回答“y”  
 keytool -import -trustcacerts -alias tomcat -keystore cacerts -storepass 123456 -file /home/zw/tomcat/tomcat.cer
 各个选项含义：
 keytool：密钥和证书管理工具；
