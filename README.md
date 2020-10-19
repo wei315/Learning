@@ -47,7 +47,7 @@
    5 安装成功  
  - cmd输入python，然后import tensorflow检验
   
-
+# 安装tomcat
 **JDK（LINUX）**
   **准备**
 - 如果包在本地，要上传到服务器上，可以通过ftp
@@ -75,7 +75,7 @@
 - 解压缩文件更名： mv /文件夹 /文件夹
 - 环境属性配置：JDK环境支持，将jdk的路径配置进去
   ·打开配置文件：vim /tomcat/bin/setclasspath.sh
-  ·在setclasspath.sh文件的头部追加如下的环境内容定义：export JAVA_HOME=/uer/local/jdk、JRE_HOME==/uer/local/jdk/jre
+  ·在setclasspath.sh文件的头部追加如下的环境内容定义：export JAVA_HOME=/uer/local/jdk、export JRE_HOME=/uer/local/jdk/jre
 - 默认的tomcat是工作在8080端口上的，现在可以修改为80端口
   ·打开配置文件：tomcat/conf/server.xml
   ·修改连接端口
