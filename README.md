@@ -136,7 +136,7 @@ keytool -genkey -v -alias tomcat -keyalg RSA -keystore /home/zw/tomcat/tomcat.ke
 
 - 2、将证书导入JDK的证书信任库（用户名输入localhost）
   ·导出证书
-执行命令“keytool -export -trustcacerts -alias tomcat -file /home/zw/tomcat/tomcat.cer -keystore /home/zw/tomcat/tomcat.keystore -storepass 123456”将证书导出到tomcat文件夹。
+执行命令“keytool -export -trustcacerts -alias tomcat -file /home/zw/tomcat/tomcat.cer -keystore /home/zw/tomcat/tomcat.keystore -storepass changeit”将证书导出到tomcat文件夹。
   ·将证书导入到JDK证书信任库
 执行命令“keytool -import -trustcacerts -alias tomcat -file /home/zw/tomcat/tomcat.cer -keystore cacerts -storepass 123456”。系统询问是否信任此证书，回答“y”  
 keytool -import -trustcacerts -alias tomcat -keystore cacerts -storepass 123456 -file /home/zw/tomcat/tomcat.cer
