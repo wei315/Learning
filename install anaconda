@@ -1,0 +1,9 @@
+frp 连接网络：
+可以理解成ubuntu 使用ssh命令进行连接
+
+安装anaconda：
+1、可以直接将包上传到文件下，然后bash 命令
+2、镜像安装
+https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/ 清华镜像找到自己需要的格式
+使用wget https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/Anaconda3-5.3.1-Linux-x86_64.sh
+安装好之后重新进入即可就可以使用conda命令 / source .bash_profile直接刷新环境变量
