@@ -1,0 +1,60 @@
+一、GPU的常用命令
+## 查看机器上GPU情况
+
+命令： nvidia-smi
+功能：显示机器上gpu的情况
+
+命令： nvidia-smi -l
+功能：定时更新显示机器上gpu的情况
+
+命令：watch -n 3 nvidia-smi 
+功能：设定刷新时间（秒）显示GPU使用情况
+
+
+## 其中左上侧有0、1、2、3的编号，表示GPU的编号，在后面指定GPU时需要使用这个编号。
+
+功能：在终端执行程序时指定GPU   
+命令：CUDA_VISIBLE_DEVICES=1   python  your_file.py
+
+这样在跑你的网络之前，告诉程序只能看到1号GPU，其他的GPU它不可见
+
+可用的形式如下：
+
+CUDA_VISIBLE_DEVICES=1           Only device 1 will be seen
+CUDA_VISIBLE_DEVICES=0,1         Devices 0 and 1 will be visible
+CUDA_VISIBLE_DEVICES="0,1"       Same as above, quotation marks are optional
+CUDA_VISIBLE_DEVICES=0,2,3       Devices 0, 2, 3 will be visible; device 1 is masked
+
+CUDA_VISIBLE_DEVICES=""          No GPU will be visible
+
+在Python代码中指定GPU
+
+import os
+
+os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+
+设置定量的GPU使用量
+
+config = tf.ConfigProto() 
+config.gpu_options.per_process_gpu_memory_fraction = 0.9 # 占用GPU90%的显存 
+session = tf.Session(config=config)
+
+设置最小的GPU使用量
+
+config = tf.ConfigProto() 
+config.gpu_options.allow_growth = True 
+session = tf.Session(config=config)
+
+
+二、显示正在运行的命令：
+ps是显示当前状态处于running的进程，grep表示在这些里搜索，而ps aux是显示所有进程和其状态。
+
+ps aux | grep amoeba
+
+三、任务：top命令
+top命令提供了运行中系统的动态实时视图。在命令提示行中输入top：
+
+top
+
+
