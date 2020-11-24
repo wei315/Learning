@@ -34,3 +34,4 @@ pip install matplotlib
 pip install scipy
 pip install common
 pip install collection
+pip install scikit-image  
