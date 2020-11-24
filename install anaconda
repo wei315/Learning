@@ -7,10 +7,20 @@ frp 连接网络：
 https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/ 清华镜像找到自己需要的格式
 使用wget https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/Anaconda3-5.3.1-Linux-x86_64.sh
 安装好之后重新进入即可就可以使用conda命令 / source .bash_profile直接刷新环境变量
-
+CONDA 版本查看
+conda -V
 创建虚拟环境
 conda create -n name python=3.8
+激活虚拟环境
+conda activate name
+退出环境
+conda deactivate    (conda4之前的版本是：source deactivate )
+删除虚拟环境
+conda remove -n name --all
 然后安装各种moudule
 
 安装pytorch
 https://pytorch.org/get-started/locally/
+
+查看conda的虚拟环境
+conda env list
