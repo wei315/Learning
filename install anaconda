@@ -17,10 +17,11 @@ conda activate name
 conda deactivate    (conda4之前的版本是：source deactivate )
 删除虚拟环境
 conda remove -n name --all
-然后安装各种moudule
-
-安装pytorch
-https://pytorch.org/get-started/locally/
 
 查看conda的虚拟环境
 conda env list
+
+## 安装：
+安装pytorch
+https://pytorch.org/get-started/locally/
+然后安装各种moudule
