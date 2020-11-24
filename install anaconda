@@ -25,3 +25,12 @@ conda env list
 安装pytorch
 https://pytorch.org/get-started/locally/
 然后安装各种moudule
+pip install h5py
+pip install argparse
+pip install tensorboardX
+pip install tensorflow
+pip install opencv-python
+pip install matplotlib
+pip install scipy
+pip install common
+pip install collection
