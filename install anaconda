@@ -35,3 +35,18 @@ pip install scipy
 pip install common
 pip install collection
 pip install scikit-image  
+
+
+
+注：如果没有conda命令的话，直接使用该语句
+vim ~/.bashrc
+
+在最后添加：
+
+export PATH=~/anaconda3/bin:$PATH
+
+
+
+重启环境变量：
+
+source ~/.bashrc
