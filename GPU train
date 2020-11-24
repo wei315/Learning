@@ -15,7 +15,7 @@
 
 功能：在终端执行程序时指定GPU   
 命令：CUDA_VISIBLE_DEVICES=1   python  your_file.py
-
+CUDA_VISIBLE_DEVICES=0,1,2 python train.py --batch_size 64 --gpu 0 1 2 --dataset all
 这样在跑你的网络之前，告诉程序只能看到1号GPU，其他的GPU它不可见
 
 可用的形式如下：
