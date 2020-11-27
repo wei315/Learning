@@ -68,3 +68,14 @@ torch.utils.data.DataLoader(image_datasets[x],
                             shuffle=True,
                             num_workers=8,
                             pin_memory=True)
+                            
+                            
+                            
+五、tmux训练模型
+http://louiszhai.github.io/2017/09/30/tmux/
+停止训练网络快捷键 ctrl + c
+关闭tmux窗口，ctrl + d
+
+
+
+
