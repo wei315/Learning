@@ -71,13 +71,20 @@ torch.utils.data.DataLoader(image_datasets[x],
                             
                             
                             
-五、tmux训练模型
+五、训练及测试的小问题：
+1、tmux训练模型
 http://louiszhai.github.io/2017/09/30/tmux/
-停止训练网络快捷键：
+2、停止训练网络快捷键：
 ctrl + c
-关闭tmux窗口：
+3、关闭tmux窗口：
 ctrl + d
-查看tmux窗口：
+4、查看tmux窗口：
 tmux list-session
+5、测试的时候会出现这样的一个错误：
+Empty test suite.（PyCharm程序运行错误）
+这个错误其实就是pycharm把该文件当成了一个测试文件，所以导致的问题，因此修改名字即可。
+
+
+
 
 
